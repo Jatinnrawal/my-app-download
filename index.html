@@ -25,7 +25,7 @@
       color: var(--text);
       text-align: center;
       padding: 50px 20px;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -100,7 +100,7 @@
       font-size: 0.9rem;
       color: #999;
       animation: fadeIn 1.8s ease forwards;
-    } 
+    }
 
     /* Animations */
     @keyframes fadeInDown {
@@ -122,9 +122,59 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes sway {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .bg-shape {
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: sway 3s infinite ease-in-out;
+      transform-origin: top center;
+    }
+
+    .bg-square {
+      width: 12px;
+      height: 12px;
+      background: var(--accent-hover);
+      border-radius: 2px;
+    }
+
+    /* Positioning a few random ones */
+    .s1 { left: 10%; animation-delay: 0s; }
+    .s2 { left: 25%; animation-delay: 0.5s; }
+    .s3 { left: 40%; animation-delay: 1s; }
+    .s4 { left: 70%; animation-delay: 1.5s; }
+    .s5 { left: 85%; animation-delay: 2s; }
+
+    .thread::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 20px;
+      background: #555;
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Floating Threaded Shapes -->
+  <div class="bg-shape thread s1"></div>
+  <div class="bg-shape bg-square thread s2"></div>
+  <div class="bg-shape thread s3"></div>
+  <div class="bg-shape bg-square thread s4"></div>
+  <div class="bg-shape thread s5"></div>
 
   <h1>Welcome to My App!</h1>
   <p>Click below to download the APK:</p>
