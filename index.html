@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Download My Android App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
       --bg: #121212;
@@ -11,6 +11,8 @@
       --card: #1e1e1e;
       --accent: #4CAF50;
       --accent-hover: #45a049;
+      --curtain-red-dark: #2c0e0e;
+      --curtain-red-light: #3b1313;
     }
 
     * {
@@ -28,44 +30,22 @@
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
-      z-index: 0;
-    }
-
-    /* Curtain background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: repeating-linear-gradient(
-        90deg,
-        #1a1a1a 0px,
-        #1a1a1a 10px,
-        #151515 10px,
-        #151515 20px
-      );
-      animation: wave 8s ease-in-out infinite;
-      opacity: 0.3;
-    }
-
-    @keyframes wave {
-      0%, 100% { background-position-x: 0; }
-      50% { background-position-x: 40px; }
     }
 
     h1 {
       font-size: 3rem;
       margin-bottom: 10px;
       animation: fadeInDown 1s ease forwards;
+      position: relative;
+      z-index: 2;
     }
 
     p {
       font-size: 1.2rem;
       margin-bottom: 25px;
       animation: fadeIn 1.2s ease forwards;
+      position: relative;
+      z-index: 2;
     }
 
     .button {
@@ -79,6 +59,8 @@
       transition: background 0.3s ease, transform 0.3s ease;
       display: inline-block;
       animation: fadeInUp 1s ease forwards;
+      position: relative;
+      z-index: 2;
     }
 
     .button:hover {
@@ -93,6 +75,8 @@
       margin-left: auto;
       margin-right: auto;
       animation: fadeIn 1.5s ease forwards;
+      position: relative;
+      z-index: 2;
     }
 
     .features h2 {
@@ -128,6 +112,97 @@
       font-size: 0.9rem;
       color: #999;
       animation: fadeIn 1.8s ease forwards;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Swinging Math Symbols */
+    @keyframes swing {
+      0% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+      100% { transform: rotate(-10deg); }
+    }
+
+    .symbol-thread {
+      position: fixed;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: swing 3s ease-in-out infinite;
+      transform-origin: top center;
+      color: var(--accent);
+      font-size: 2.5rem;
+      z-index: 1;
+      user-select: none;
+    }
+
+    .symbol-thread::before {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 50px;
+      background-color: #555;
+      margin-bottom: 5px;
+      border-radius: 2px;
+    }
+
+    .plus   { left: 10%; animation-delay: 0s; }
+    .minus  { left: 30%; animation-delay: 0.5s; }
+    .times  { left: 60%; animation-delay: 1s; }
+    .divide { left: 80%; animation-delay: 1.5s; }
+
+    /* Curtain left and right */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      width: 20%;
+      height: 100%;
+      z-index: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--curtain-red-dark),
+        var(--curtain-red-dark) 10px,
+        var(--curtain-red-light) 10px,
+        var(--curtain-red-light) 20px
+      );
+      box-shadow: inset 10px 0 30px rgba(0, 0, 0, 0.5);
+      animation: curtain-sway 8s ease-in-out infinite;
+      opacity: 0.9;
+    }
+
+    body::before {
+      left: 0;
+      border-top-right-radius: 60px;
+    }
+
+    body::after {
+      right: 0;
+      border-top-left-radius: 60px;
+    }
+
+    /* Top Curtain */
+    #top-curtain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--curtain-red-dark),
+        var(--curtain-red-dark) 10px,
+        var(--curtain-red-light) 10px,
+        var(--curtain-red-light) 20px
+      );
+      border-bottom-left-radius: 50% 40px;
+      border-bottom-right-radius: 50% 40px;
+      z-index: 0;
+      animation: curtain-drop 1.5s ease-out forwards;
+      transform: translateY(-100%);
+      box-shadow: inset 0 -10px 30px rgba(0, 0, 0, 0.7);
     }
 
     /* Animations */
@@ -151,39 +226,16 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes swing {
-      0% { transform: rotate(-10deg); }
-      50% { transform: rotate(10deg); }
-      100% { transform: rotate(-10deg); }
+    @keyframes curtain-sway {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(10px); }
     }
 
-    .symbol-thread {
-      position: absolute;
-      top: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: swing 3s ease-in-out infinite;
-      transform-origin: top center;
-      color: var(--accent);
-      font-size: 2.5rem;
-      z-index: 0;
+    @keyframes curtain-drop {
+      to {
+        transform: translateY(0);
+      }
     }
-
-    .symbol-thread::before {
-      content: '';
-      display: block;
-      width: 2px;
-      height: 50px;
-      background-color: #555;
-      margin-bottom: 5px;
-    }
-
-    .plus   { left: 10%; animation-delay: 0s; }
-    .minus  { left: 30%; animation-delay: 0.5s; }
-    .times  { left: 60%; animation-delay: 1s; }
-    .divide { left: 80%; animation-delay: 1.5s; }
-
   </style>
 </head>
 <body>
@@ -194,7 +246,10 @@
   <div class="symbol-thread times">×</div>
   <div class="symbol-thread divide">÷</div>
 
-  <h1>Welcome to My App!</h1>
+  <!-- Top curtain -->
+  <div id="top-curtain"></div>
+
+  <h1>Welcome to Calc!</h1>
   <p>Click below to download the APK:</p>
   <a href="app-release.apk" download class="button">Download APK</a>
 
